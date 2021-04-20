@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/65c2086d72.js" crossorigin="anonymous"></script>    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>dashboard</title>
+
+    <style>
+        *{
+            margin : 0;
+            padding : 0;
+            box-sizing: border-box;
+        }
+
+        html{
+    scroll-behavior: smooth;
+        }
+
+        /* custom scroll bar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+
+        .navcol {
+            background-color: #bffbff;
+            opacity: 50%;
+            padding-top : 0px!important;
+            padding-bottom : 0px!important;
+        }
+
+        
+
+        .mybtn {
+            width:100px;
+            border : 1px solid black;
+        }
+
+        .Timeline{
+            margin-left: 10px;
+            margin-right : 10px;
+            width : 90%;
+            height:550px;
+            background-color : lightblue;
+            border-radius: 5px;
+            overflow: scroll;
+        }
+
+        .notice {
+            height: 250px;
+            background-color: pink;
+            border-radius: 5px;
+            width:97%;
+            margin: 5px;
+        }
+
+        .schedule{
+            height:250px;
+            background-color: yellow;
+            border-radius: 5px;
+            width:97%;
+            margin: 5px;
+        }
+
+        .afterdispbutton{
+            display: inline-block;
+            width:48%;
+            background-color: red;
+        }
+
+        .afterdisp{
+            text-align: center;
+        }
+
+        .container{
+            max-width: 100%;
+        }
+
+        .container#blur.active{
+            filter: blur(10px);
+        }
+
+        #popup{
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            padding: 50px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.30);
+            background:  #fff;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.5s;
+        }
+        
+        #popup a{
+            position: absolute;
+            top: 20px;
+            right: 15px;
+            color: white;
+            background: black;
+            padding: 3px 6px;
+            border-radius: 2px;
+        }
+        #popup.active{
+            width: 90%;
+            border-radius: 5px;
+            visibility: visible;
+            opacity: 1;
+            transition: 0.5s;
+        }
+        
+        .notice2{
+            list-style-type: none;
+        }
+        #popup h2{
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            border-radius: 5px;
+            padding: 5px 5px;
+            margin: 10px 0px ;
+        }
+
+        #popup ul{
+            position: relative;
+            top: 20px;
+            left: -25px;
+        }
+        #popup ul li{
+            padding: 5px 5px ;
+        }
+        /* Schedule popup*/
+        #popup2{
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 40%;
+            width: 600px;
+            padding: 50px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.30);
+            background: #fff;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.5s;
+            overflow: scroll;
+        }
+        
+        #popup2 a{ 
+            position: absolute;
+            top: 20px;
+            right: 15px;
+            color: white;
+            background: black;
+            padding: 3px 6px;
+            border-radius: 2px;
+        }
+        #popup2.active{
+            width: 90%;
+            border-radius: 5px;
+            visibility: visible;
+            opacity: 1;
+            transition: 0.5s;
+        }
+
+        .schedule2{
+            list-style-type: none;
+        }
+        #popup2 h2{
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            border-radius: 5px;
+            padding: 5px 5px;
+            margin: 10px 0px ;
+        }
+
+        #popup2 ul{
+            position: relative;
+            top: 20px;
+            left: -25px;
+        }
+
+        #popup2 ul li{
+            padding: 5px 5px ;
+        }
+
+        /* Media queries */
+        
+        @media screen and (max-width : 991px){
+            .mybtndisappear {
+                display:none;
+            }
+        }
+
+        @media screen and (min-width : 991px){
+            .uldisappear {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width : 768px){
+            .noticedisappear{
+                display:none;
+            }
+        }
+
+        @media screen and (min-width : 768px){
+            .afterdisp{
+                display: none;
+            }
+        }
+
+        
+    </style>
+
+    <script type="text/javascript">
+    // notice  popup//
+    function togglenotice(){
+        var blur = document.getElementById('blur');
+        blur.classList.toggle('active');
+        var popup = document.getElementById('popup');
+        popup.classList.toggle('active')
+    }
+// Schedule popup//
+    function toggleschedule(){
+        var blur = document.getElementById('blur');
+        blur.classList.toggle('active');
+        var popup = document.getElementById('popup2');
+        popup.classList.toggle('active')
+    }
+
+    </script>
+
+  </head>
+  <body>
+  <div class="container" id="blur" >
+    <div class="fakeimg" style="background-color: grey; height: 300px;">   
+    </div>
+    
+    <div><!--This is navbar-->
+        <nav class="navbar navbar-expand-lg navbar-light navcol mb-3">
+            <a class="navbar-brand" href="#">logo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav  uldisappear">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Events <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Courses</a>
+                </li>
+                <li class="nav-item">
+                      <a class="nav-link" href="#">Progress</a>
+                </li>
+                <li class="nav-item">
+                      <a class="nav-link" href="#">Documents</a>
+                </li>
+                <li class="nav-item">
+                      <a class="nav-link" href="#">My Account</a>
+                </li> 
+              </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container afterdisp">
+        
+            <button type="button" onclick="togglenotice()" class="btn btn-primary btn-sm afterdispbutton "><b style="color : black">notice</b></button>
+         
+            <button type="button" onclick="toggleschedule()" class="btn btn-primary btn-sm afterdispbutton "><b style="color : black">schedule</b></button>  
+    </div>
+
+    <section>
+        <div class="container-fluid">
+            <div class="row justify-content-around">
+                <div class="col-lg-2 mybtndisappear ">
+                    <div class="row p-2 ml-3">
+                        <button type="button" class="btn btn-primary btn-sm mybtn"><b style="color : black">Events</b></button>
+                    </div>
+                    <div class="row p-2 ml-3">
+                        <button type="button" class="btn btn-primary btn-sm mybtn"><b style="color : black">Courses</b></button>
+                    </div>
+                    <div class="row p-2 ml-3">
+                        <button type="button" class="btn btn-primary btn-sm mybtn"><b style="color : black">Progress</b></button>
+                    </div>
+                    <div class="row p-2 ml-3">
+                        <button type="button" class="btn btn-primary btn-sm mybtn"><b style="color : black">Documents</b></button>
+                    </div>
+                    <div class="row p-2 ml-3">
+                        <button type="button" class="btn btn-primary btn-sm mybtn"><b style="color : black">My account</b></button>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-7 col-12 Timeline">
+                    <div class="fakeimg "><h3>Timeline</h3>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam!
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim nisi cupiditate officia quae? Deserunt unde adipisci eos nostrum nulla, sequi temporibus esse quia necessitatibus, qui dolores repellat expedita sunt aperiam
+                    </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4  noticedisappear ">
+                    <div class="row notice">
+                       <div class="fakeimg "><h3>notice</h3></div>
+                    </div>
+                    <div class="row schedule">   
+                        <div class="fakeimg "><h3>schedule</h3></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    </div>
+
+    <!-- Notice popup-->
+<div id="popup">
+    <header>
+    <h2>Notifications</h2> <a href="#" onclick="togglenotice()">&times;</a>
+    </header>
+    <ul>
+        <li class="notice2"><i class="fas fa-bookmark"></i></i> Python assignment due date is tomorrow</li>
+        <li class="notice2"><i class="fas fa-bookmark"></i></i> Python assignment due date is tomorrow</li>
+        <li class="notice2"><i class="fas fa-bookmark"></i></i> Python assignment due date is tomorrow</li>
+        <li class="notice2"><i class="fas fa-bookmark"></i></i> Python assignment due date is tomorrow</li>
+        <li class="notice2"><i class="fas fa-bookmark"></i></i> Python assignment due date is tomorrow</li>
+    </ul>
+</div>  
+<!--Schedule popup-->
+<div id="popup2">
+    <h2>Schedule</h2>    <a href="#" onclick="toggleschedule()">&times;</a>
+    <ul>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+        <li class="schedule2"><i class="far fa-dot-circle"></i> Python assignment due date is tomorrow</li>
+    </ul>
+
+</div> 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
